@@ -12,13 +12,20 @@ Thuật toán được triển khai trên nền tảng Hadoop MapReduce, tận d
 
 - **PPR** điều chỉnh PageRank chuẩn bằng cách luôn teleport về node nguồn (source) thay vì ngẫu nhiên.
 - **Công thức cập nhật:**
-  - Nếu node là source:  
-    \( PR_{new}(i) = (1-d) + d \times (\text{sumContrib} + \text{danglingSum}) \)
-  - Nếu node khác source:  
-    \( PR_{new}(i) = d \times \text{sumContrib} \)
-  - \( d \): hệ số damping (thường 0.85)
-  - sumContrib: tổng đóng góp từ các node trỏ tới \( i \)
-  - danglingSum: tổng PageRank từ các node không có outbound link
+  - Nếu node là source:
+    
+    ```
+    PR_new(i) = (1 - d) + d * (sumContrib + danglingSum)
+    ```
+  - Nếu node khác source:
+    
+    ```
+    PR_new(i) = d * sumContrib
+    ```
+  - Trong đó:
+    - d: hệ số damping (thường 0.85)
+    - sumContrib: tổng đóng góp từ các node trỏ tới i
+    - danglingSum: tổng PageRank từ các node không có outbound link
 
 - **Luồng MapReduce:**
   - **Input:** Đồ thị dạng danh sách kề, mỗi dòng: `node_id \t PR_value \t neighbor1,neighbor2,...`
